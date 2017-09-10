@@ -1,0 +1,266 @@
+* {
+    transition-delay: 0s;
+    transition-duration: 1s;
+    transition-property: all;
+    transition-timing-function: ease
+}
+html {
+    background: url('background.png') top right;
+    background-size: 100%;
+    color: #fff;
+}
+tr, td {
+    text-align: center;
+}
+#auth {
+    position: absolute;
+    bottom: 20px;
+    left: 25px;
+    right: 25px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px 5px;
+    text-align: center;
+    border-radius: 10px;
+    border-bottom-right-radius: 0;
+    transition-delay: 1s;
+    color: white;
+}
+#welcome {
+    position: absolute;
+    top: 15px;
+    left: 9px;
+    right: 9px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 10px;
+    color: white;
+}
+
+#auth_welcome {
+    display: none;
+    position: absolute;
+    top: 15px;
+    left: 9px;
+    right: 9px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 10px;
+    color: white;
+}
+
+.cell {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    font-size: 15px;
+    border-radius: 10px;
+}
+
+#cell_left {
+    width: 40%;
+}
+
+#cell_center {
+    width: 20%;
+}
+
+#cell_right {
+    width: 40%;
+}
+
+.send_cell {
+    width: 30%;
+}
+
+#stats {
+    position: absolute;
+    display: none;
+    bottom: 5px;
+    width: 95%;
+}
+
+#stats_table {
+    width: 100%;
+    height: 30px;
+}
+
+#soundbytes {
+    display: none;
+    height: 100%;
+}
+
+#soundbyte_data {
+    margin-top: 60px;
+    height: 350px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+
+#soundbyte_search {
+    margin-left: 5px;
+    margin-top: 5px;
+    width: 160px;
+    border-radius: 10px;
+}
+
+#soundbyte_genre {
+    width: 120px;
+    border-radius: 10px;
+}
+
+#soundbyte_table {
+    margin-left: 8px;
+    margin-top: 5px;
+    width: 283px;
+    height: 285px;
+    color: white;
+}
+
+.btn_send {
+    border: 0;
+    background: rgba(50, 168, 50, 0.5);
+    box-shadow:none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+#pagination {
+    position: fixed;
+    width: 302px;
+    bottom: 95px;
+}
+
+#pagination_table {
+    width: 100%;
+    height: 20px;
+}
+
+#pag_left {
+    width: 40%;
+}
+
+#pag_center {
+    width: 20%;
+}
+
+#pag_right {
+    width: 40%;
+}
+
+#page {
+    color: white;
+}
+
+#messages {
+    background: rgba(0, 0, 0, 0.5);
+    height: 30px;
+    margin-top: 15px;
+    border-radius: 10px;
+    bottom: 55px;
+    position: fixed;
+    width: 302px;
+}
+
+#success {
+    background: rgba(50, 168, 50, 0.5);
+    height: 25px;
+    border-radius: 10px;
+    text-align: center;
+    padding-top: 5px;
+    display: none;
+}
+
+#fail {
+    background: rgba(221, 15, 49, 0.5);
+    height: 25px;
+    border-radius: 10px;
+    text-align: center;
+    padding-top: 5px;
+    display: none;
+}
+
+#doubloons {
+    font-size: 70%;
+    color: white;
+}
+
+#soundbyte_credits {
+    font-size: 70%;
+    color: white;
+}
+
+#credit_img {
+    width: 20px;
+    height: 20px;
+    position: fixed;
+    right: 18px;
+    top: 23px;
+    z-index: 2;
+    border-radius: 5px;
+}
+
+#credit_info {
+    position: fixed;
+    width: 268px;
+    left: 25px;
+    right: 25px;
+    top: 100px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.8);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    display: none;
+}
+
+.credit_describe {
+    font-size: 70%;
+}
+
+#settings_img {
+    width: 20px;
+    height: 20px;
+    position: fixed;
+    left: 18px;
+    top: 23px;
+    z-index: 2;
+    border-radius: 5px;
+}
+
+#settings_info {
+    position: fixed;
+    width: 268px;
+    left: 25px;
+    right: 25px;
+    top: 100px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.8);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    display: none;
+}
+
+.settings_describe {
+    font-size: 70%;
+}
+
+.settings_button_selected {
+    background: rgba(50, 168, 50, 0.5);
+}
+
+.settings_button {
+    border: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-shadow:none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    margin: 5px;
+}

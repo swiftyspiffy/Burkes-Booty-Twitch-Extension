@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="script.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="welcome">Welcome to Burke's Booty!</div>
+    <div id="credit">
+        <a href="#" id="credit_link">
+            <img src="clippy.jpg" id="credit_img">
+        </a>
+    </div>
+    <div id="settings">
+        <a href="#" id="settings_link">
+            <img src="gear.png" id="settings_img">
+        </a>
+    </div>
+    <div id="auth_welcome">
+        <span id="auth_welcome_msg"></span>
+    </div>
+    <div id="credit_info">
+        <span>
+            Burke's Booty Extension<br><br>
+            <span class="credit_describe">Developed by:</span> swiftyspiffy<br>
+            <span class="credit_describe">Intended use:</span> BurkeBlack<br>
+        </span>
+    </div>
+    <div id="settings_info">
+        <span>
+            Burke's Booty Settings<br><br>
+            Announce Soundbytes: <button id="announce_yes_button" type="button" class="settings_button settings_button_selected">Yes</button><button id="announce_no_button" type="button" class="settings_button">No</button>
+        </span>
+    </div>
+    <div id="soundbytes">
+        <div id="soundbyte_data">
+            <input type="text" id="soundbyte_search">
+            <select id="soundbyte_genre"></select>
+            <table id="soundbyte_table">
+                <tbody id="soundbyte_Table_body"></tbody>
+            </table>
+            <div id="pagination">
+                <table id="pagination_table">
+                    <tr>
+                        <td id="pag_left">
+                            <button id="pag_left_button" type="button" class="btn_send">Prev</button>
+                        </td>
+                        <td id="pag_center">
+                            <span id="page">1</span>
+                        </td>
+                        <td id="pag_right">
+                            <button id="pag_right_button" type="button" class="btn_send">Next</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="messages">
+                <div id="success">
+                    <span id="success_msg"></span>
+                </div>
+                <div id="fail">
+                    <span id="fail_msg"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="auth">
+        <span>Burke's Booty requires access to your Twitch ID!</span>
+    </div>
+    <div id="stats">
+        <table id="stats_table">
+            <tr>
+                <td id="cell_left" class="cell">
+                    <span id="doubloons">Doubloons</span><br>
+                    <span id="doubloon_count"></span>
+                </td>
+                <td id="cell_center" class="cell">
+                    <a href="#" id="refresh_stats">
+                        <img src="refresh.png" width="25" height="25">
+                    </a>
+                </td>
+                <td id="cell_right" class="cell">
+                    <span id="soundbyte_credits">Soundbyte Credits</span><br>
+                    <span id="soundbyte_credit_count"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
