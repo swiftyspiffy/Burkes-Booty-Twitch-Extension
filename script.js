@@ -20,12 +20,11 @@ window.Twitch.ext.onAuthorized(function(auth) {
 });
 
 window.Twitch.ext.onError(function(error) {
-    console.log("Burke's Booty Error:" + error);
+    //console.log("Burke's Booty Error:" + error);
 });
 
 $(document).ready(function() {
     $('#credit_link').click(function() {
-        console.log("fired");
         if($('#credit_info').is(":visible")) {
             if(!($('#soundbytes').is(":visible")) && authed) {
                 $('#soundbytes').show();
