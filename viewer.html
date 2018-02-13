@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +10,11 @@
 </head>
 <body>
     <div id="welcome">Welcome to Burke's Booty!</div>
+	<div id="wins">
+        <a href="#" id="wins_link">
+            <img src="wins.png" id="wins_img">
+        </a>
+    </div>
     <div id="credit">
         <a href="#" id="credit_link">
             <img src="clippy.jpg" id="credit_img">
@@ -17,6 +23,11 @@
     <div id="settings">
         <a href="#" id="settings_link">
             <img src="gear.png" id="settings_img">
+        </a>
+    </div>
+    <div id="giveaway_submission">
+        <a href="#" id="giveaway_submission_link">
+            <img src="giveaway.png" id="giveaway_submission_img">
         </a>
     </div>
     <div id="auth_welcome">
@@ -29,6 +40,32 @@
             <span class="credit_describe">Intended use:</span> BurkeBlack<br>
         </span>
     </div>
+    <div id="giveaway_submission_info">
+        <span>BurkeBlack Giveaway Submission</span><br><br>
+        <span>Giveaway Name: </span><br><input type="text" id="giveaway_name"><br>
+        <span>Giveaway Donator: </span><br><input type="text" id="giveaway_donator"><br>
+        <span>Giveaway Type: </span><br>
+        <select id="giveaway_type">
+            <option value="steam_code">Steam Code</option>
+            <option value="steam_gift">Steam Gift</option>
+            <option value="origin_code">Origin Code</option>
+            <option value="humblebundle">Humble Bundle</option>
+            <option value="uplay">Uplay</option>
+            <option value="code">Serial/Code</option>
+            <option value="other">Other</option>
+        </select><br>
+        <span>Giveaway Key/Code/Link: </span><br><input type="text" id="giveaway_data"><br>
+        <span>Doubloon Requirement:</span><br><input type="number" id="giveaway_doubloons" value="0"><br>
+		<span>Non Subscriber Only:</span><input type="checkbox" id="giveaway_non_sub"><br><br>
+        <button type="button" id="giveaway_clear">Clear</button>
+        <button type="button" id="giveaway_submit">Submit</button>
+    </div>
+	<div id="wins_info">
+		<span class="wins_sections">Raffle Wins</span><br>
+		<table id="raffle_wins"></table><br>
+		<span class="wins_sections">!Game Redemptions</span><br>
+		<table id="exgame_redemptions"></table>
+	</div>
     <div id="settings_info">
         <span>
             Burke's Booty Settings<br><br>
@@ -57,14 +94,14 @@
                     </tr>
                 </table>
             </div>
-            <div id="messages">
-                <div id="success">
-                    <span id="success_msg"></span>
-                </div>
-                <div id="fail">
-                    <span id="fail_msg"></span>
-                </div>
-            </div>
+        </div>
+    </div>
+    <div id="messages">
+        <div id="success">
+            <span id="success_msg"></span>
+        </div>
+        <div id="fail">
+            <span id="fail_msg"></span>
         </div>
     </div>
     <div id="auth">
