@@ -1,0 +1,402 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
+    <script src="../shared_assets/jquery-3.2.1.min.js"></script>
+	<link href="bootstrap.min.css" rel="stylesheet" />
+	<script src="bootstrap.min.js"></script>
+    <script src="script.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+</head>
+<body>
+
+	<nav id="main_nav" class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<span id="intro">Hello! Please login!</span>
+		<button class="navbar-toggler ml-auto" id="toggle_button" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" id="user_stats_link">User Stats <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="settings_link">Settings</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="soundbytes_link">Soundbytes</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="submit_giveaway_link">Submit Giveaway</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="time_tracker_link">Time Tracker</a>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="raffle_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Raffles
+					</a>
+					<div class="dropdown-menu" aria-labelledby="raffle_dropdown">
+						<a class="dropdown-item" id="raffle_wins_link">Raffle Wins</a>
+						<a class="dropdown-item" id="raffle_enter_link">Enter Raffle!</a>
+					</div>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="exgame_wins" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					!Games
+					</a>
+					<div class="dropdown-menu" aria-labelledby="exgame_wins">
+						<a class="dropdown-item" id="past_redemptions_link">Past Redemptions</a>
+						<a class="dropdown-item" id="redeem_now_link">Redeem Now!</a>
+					</div>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="subathon_link">Subathon</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="about_link">About</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="feedback_link">Feedback!</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<br>
+	<div id="onboarding" class="extension_componenet">
+		<span class="text-center" id="onboarding_text">Please authenticate by clicking the BurkesBooty tab above and selecting Link Identity.</span>
+	</div>
+	<div id="user_stats" class="extension_componenet">
+		<div class="card text-white bg-secondary mb-3 user_stats_listing">
+			<div class="row ">
+				<div class="col-3 align-self-center">
+					<img src="doubloon.png" class="w-100">
+				</div>
+				<div class="col-9">
+					<div class="card-block">
+						<h4 class="card-title">Doubloons</h4>
+						<p class="card-text text-right-padding"><span id="doubloon_total">Loading...</span></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card text-white bg-secondary mb-3 user_stats_listing">
+			<div class="row ">
+				<div class="col-3 align-self-center">
+					<img src="sound.png" class="w-100">
+				</div>
+				<div class="col-9">
+					<div class="card-block">
+						<h4 class="card-title">Soundbyte Credits</h4>
+						<p class="card-text text-right-padding"><span id="soundbyte_credit_total">Loading...</span></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card text-white bg-secondary mb-3 user_stats_listing">
+			<div class="row ">
+				<div class="col-3 align-self-center">
+					<img src="heart.png" class="w-100">
+				</div>
+				<div class="col-9">
+					<div class="card-block">
+						<h4 class="card-title">Followed Date</h4>
+						<p class="card-text text-right-padding"><span id="followed_date">Loading...</span></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card text-white bg-secondary mb-3 user_stats_listing">
+			<div class="row ">
+				<div class="col-3 align-self-center">
+					<img src="sub.png" class="w-100">
+				</div>
+				<div class="col-9">
+					<div class="card-block">
+						<h4 class="card-title">Subscription Status</h4> 
+						<p class="card-text text-right-padding"><span id="subscription_status">Loading...</span></p>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+	<div id="settings" class="extension_componenet">
+		<div class="card text-white bg-secondary mb-3 user_stats_listing">
+			<div class="row ">
+				<div class="col-3 align-self-center">
+					<img src="../shared_assets/gear.png" class="w-100">
+				</div>
+				<div class="col-9">
+					<div class="card-block">
+						<h4 class="card-title">Settings</h4>
+						<p class="card-text text-right-padding">
+							Do you want soundbytes you send to BurkeBlack's stream to be announced in chat?
+							<div class="btn-group" role="group" aria-label="announce">
+								<button type="button" id="announce_yes" class="btn btn-success">Yes</button>
+								<button type="button" id="announce_no" class="btn btn-secondary">No</button>
+							</div>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="soundbytes" class="extension_componenet">
+		<div class="row">
+			<div class="col-6">
+				<input type="text" class="form-control" id="soundbyte_search" placeholder="soundbyte search">
+			</div>
+			<div class="col-6">
+				<select class="form-control" id="soundbyte_genre"></select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="container">
+				<table class="table">
+					<tbody id="soundbytes_table"></body>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-4 text-center"><button id="pagination_left" class="btn btn-primary btn">Prev</button></div>
+			<div class="col-2 text-center"><span id="page">1</span></div>
+			<div class="col-4 text-center"><button id="pagination_right" class="btn btn-primary btn">Next</button></div>
+			<div class="col-1"></div>
+		</div><br>
+	</div>
+	<div id="submit_giveaway" class="extension_componenet">
+	
+	</div>
+	<div id="time_tracker" class="extension_componenet">
+	
+	</div>
+	<div id="raffle_wins" class="extension_componenet">
+		<div class="row">
+			<div class="container">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Key</th>
+						</tr>
+					</thead>
+					<tbody id="raffle_wins_table"></body>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div id="past_redemptions" class="extension_componenet">
+		<div class="row">
+			<div class="container">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Key</th>
+						</tr>
+					</thead>
+					<tbody id="exgames_redemptions_table"></body>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div id="redeem_now" class="extension_componenet">
+		<div class="col-1"></div>
+		<div class="col-10">
+		This UI is not supported at the moment.
+		</div>
+		<div class="col-1"></div>
+	</div>	
+	<div id="subathon" class="extension_componenet">
+		<div class="col-1"></div>
+		<div class="col-10">
+		This UI is not supported at the moment.
+		</div>
+		<div class="col-1"></div>
+	</div>
+	<div id="about" class="extension_componenet">
+		<div class="card text-white bg-secondary mb-3 user_stats_listing">
+			<div class="row ">
+				<div class="col-3 align-self-center">
+					<img src="../shared_assets/clippy.jpg" class="w-100">
+				</div>
+				<div class="col-9">
+					<div class="card-block">
+						<h4 class="card-title">About BurkesBooty</h4>
+						<p class="card-text text-right-padding">
+							This Twitch Extension was developed for use exclusively in BurkeBlack's Twitch channel.This extension was developed by swiftyspiffy.<br>
+							<div class="row">
+								<div class="col-4 align-self-center">
+									<img class="dev_img" src="../shared_assets/twitch.png">
+								</div>
+								<div class="col-8 align-self-center">
+									<b>swiftyspiffy</b>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-4 align-self-center">
+									<img class="dev_img" src="../shared_assets/twitter.png">
+								</div>
+								<div class="col-8 align-self-center">
+									<b>swiftyspiffy</b>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-4 align-self-center">
+									<img class="dev_img" src="../shared_assets/github.png">
+								</div>
+								<div class="col-8 align-self-center">
+									<b>swiftyspiffy</b>
+								</div>
+							</div>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="feedback" class="extension_componenet">
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-10 text-center">
+				<span id="feedback_intro">So you have some feedback? Awesome! Please enter it below and click Send Feedback! Thanks again!</span>
+			</div>
+			<div class="col-1"></div>
+		</div>
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-10">
+				<fieldset class="form-group">
+					<label for="feedback_os">Operating System</label>
+					<div class="form-check">
+						<label class="form-check-label">
+						<input type="radio" class="form-check-input" name="feedback_os" id="ios" value="iOS" checked>
+						iOS
+						</label>
+					</div>
+					<div class="form-check">
+						<label class="form-check-label">
+						<input type="radio" class="form-check-input" name="feedback_os" id="android" value="Android">
+						Android
+						</label>
+					</div>
+					<div class="form-check">
+						<label class="form-check-label">
+						<input type="radio" class="form-check-input" name="feedback_os" id="other" value="Other">
+						Other
+						</label>
+					</div>
+				</fieldset>
+			</div>
+			<div class="col-1"></div>
+		</div>
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-10">
+				<div class="form-group">
+					<label for="feedback_msg">Feedback</label>
+					<textarea class="form-control" id="feedback_msg" rows="3"></textarea>
+				</div>
+			</div>
+			<div class="col-1"></div>
+		</div>
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-10">
+				<button type="submit" id="feedback_submit" class="btn btn-block btn-success">Send Feedback</button>
+			</div>
+			<div class="col-1"></div>
+		</div>
+	</div>
+	<div id="realtime_giveaway" class="extension_componenet">
+		<div class="card text-white bg-secondary mb-3 user_stats_listing">
+			<div id="realtime_giveaway_new" class="text-center row" style="display: block;">
+				<div class="row text-center">
+					<div class="col-1"></div>
+					<div class="col-10">
+						<h4 class="text-center">New Giveaway Started</h4>
+						<span>Giveaway Name</span><br>
+						<span class="realtime_giveaway_value" id="realtime_giveaway_title">Loading...</span><br>
+						<span>Giveaway Donator</span><br>
+						<span class="realtime_giveaway_value" id="realtime_giveaway_donator">Loading...</span><br>
+						<span>Time Remaining</span><br>
+						<span class="realtime_giveaway_value" id="realtime_giveaway_remaining">Loading...</span><br>
+						<button type="submit" id="realtime_giveaway_action" class="btn btn-block btn-success">Enter Giveaway!</button>
+					</div>
+					<div class="col-1"></div>
+				</div>				
+			</div>
+			<div id="realtime_giveaway_claim" class="text-center row">
+				<div class="row text-center">
+					<div class="col-1"></div>
+					<div class="col-10">
+						<h4 class="card-title">Giveaway Claim Period</h4>
+						<span>Giveaway Name</span><br>
+						<span class="realtime_giveaway_value" id="realtime_giveaway_claim_title">Loading...</span><br>
+						<span>Giveaway Donator</span><br>
+						<span class="realtime_giveaway_value" id="realtime_giveaway_claim_donator">Loading...</span><br>
+						<span>Giveaway Winner</span><br>
+						<span class="realtime_giveaway_value" id="realtime_giveaway_claim_winner">Loading...</span><br>
+						<span id="realtime_giveaway_claim_remaining_label">Claim Time Remaining</span><br>
+						<span class="realtime_giveaway_value" id="realtime_giveaway_claim_remaining">Loading...</span><br>
+						<button type="submit" id="realtime_giveaway_claim_action" class="btn btn-block btn-success">Claim Giveaway!</button>
+					</div>
+					<div class="col-1"></div>
+				</div>
+			</div>
+		</div>
+    </div>
+	<div id="modal" class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="modal_title" class="modal-title"></h5>
+				</div>
+				<div class="modal-body">
+					<p id="modal_message"></p>
+				</div>
+				<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="modalCaptive" class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header modal_error">
+					<h5 id="modalCaptive_title" class="modal-title">Extension Disabled</h5>
+				</div>
+				<div class="modal-body">
+					<p id="modalCaptive_message"></p>
+				</div>
+				<div class="modal-footer">
+					<button id="checkServer" type="button" class="btn btn-success">Check Server Status...</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="modalRaffle" class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="modalRaffle_title" class="modal-title"></h5>
+				</div>
+				<div class="modal-body">
+					<p id="modalRaffle_message"></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

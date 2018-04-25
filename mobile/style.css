@@ -1,0 +1,147 @@
+body {
+    background: url('../shared_assets/background.png') top right;
+    background-size: 100%;
+    color: #fff;
+}
+
+#intro {
+	font-weight: bold;
+	font-size: 130%;
+	color: white;
+}
+
+.user_stats_listing {
+	background-color: rgba(0, 0, 0, 0.7)!important;
+	border-radius: 25px!important;
+	margin-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+#toggle_button {
+	display: none;
+}
+
+#onboarding {
+	display: none;
+}
+
+#user_stats {
+	display: none;
+}
+
+#settings {
+	display: none;
+}
+
+#soundbytes {
+	display: none;
+}
+
+#about {
+	display: none;
+}
+
+.soundbyte_listing {
+	font-size: 75%;
+}
+
+.extension_componenet {
+	background-color: transparent !important;
+}
+
+.text-right-padding {
+	padding-right: 10px;
+}
+
+.dropdown-backdrop {
+    position: static;
+}
+
+#modal_title {
+	color: black;
+}
+
+#modal_message {
+	color: black;
+}
+
+#modalCaptive_title {
+	color: black;
+}
+
+#modalCaptive_message {
+	color: black;
+}
+
+.modal_success {
+	background-color: lightgreen;
+}
+
+.modal_error {
+	background-color: salmon;
+}
+
+.dev_img {
+	width: 50px;
+}
+
+#onboarding_text {
+	font-style: italic;
+}
+
+.table_head_col1 {
+	width: 20%;
+}
+
+.table_head_col2 {
+	width: 80%;
+}
+
+#user_stats_link #settings_link #submit_giveaway #time_tracker #raffle_wins #past_redemptions #redeem_new #subathon #about {
+	display: none;
+}
+
+#feedback_intro {
+	font-style: italic;
+	color: white;
+}
+
+#raffle_inactive_intro {
+	font-style: italic;
+	color: white;
+}
+
+#raffle_active {
+	display: none;
+}
+
+.raffle_active_detail_intro {
+	font-size: 75%;
+}
+
+.raffle_active_detail {
+	font-weight: bold;
+}
+
+.realtime_giveaway_value {
+	font-size: 140%;
+	font-style: italic;
+	font-weight: bold;
+}
+
+#realtime_giveaway_new {
+	display: none;
+}
+
+#realtime_giveaway_claim {
+	display: none;
+}
+
+#realtime_giveaway_claim_remaining_label {
+	color: rgb(244, 66, 66);
+}
+
+#realtime_giveaway_claim_winner {
+	color: rgba(255, 204, 0) !important;
+}

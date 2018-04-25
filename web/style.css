@@ -1,5 +1,5 @@
 html {
-    background: url('background.png') top right;
+    background: url('../shared_assets/background.png') top right;
     background-size: 100%;
     color: #fff;
 }
@@ -30,6 +30,24 @@ tr, td {
     text-align: center;
     border-radius: 10px;
     color: white;
+}
+
+#under_maintenance {
+	position: absolute;
+    top: 120px;
+    left: 9px;
+    right: 9px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 10px;
+    color: white;
+	display: none;
+}
+
+#under_maintenance_custom {
+	color: red;
 }
 
 #auth_welcome {
@@ -272,11 +290,212 @@ tr, td {
     margin: 5px;
 }
 
+#time_img {
+	width: 25px;
+    height: 25px;
+    position: fixed;
+    left: 67px;
+    top: 20px;
+    z-index: 2;
+    border-radius: 5px;
+    display: none;
+}
+
+#time_info {
+	position: fixed;
+    width: 300px;
+    left: 10px;
+    right: 25px;
+    top: 55px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.8);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    display: none;
+}
+
+#time_stream {
+	display: none;
+}
+
+#time_stream_game {
+	font-size: 140%;
+	font-style: italic;
+	font-weight: bold;
+}
+
+#time_stream_duration {
+	font-size: 140%;
+	font-style: italic;
+	font-weight: bold;
+}
+
+#time_stream_completion_in {
+	font-size: 140%;
+	font-style: italic;
+	font-weight: bold;
+}
+
+#time_schedule {
+	display: none;
+}
+
+#time_schedule_date {
+	font-size: 140%;
+	font-style: italic;
+	font-weight: bold;
+}
+
+#time_schedule_time {
+	font-size: 140%;
+	font-style: italic;
+	font-weight: bold;
+}
+
+#time_schedule_entry {
+	font-size: 140%;
+	font-style: italic;
+	font-weight: bold;
+	color: red;
+}
+
+#time_stream_entry {
+	font-size: 140%;
+	font-style: italic;
+	font-weight: bold;
+	color: green;
+}
+
+#time_schedule_countdown {
+	font-size: 140%;
+	font-style: italic;
+	font-weight: bold;
+}
+
+#giveaway_new_info {
+	position: fixed;
+    width: 300px;
+    left: 10px;
+    right: 25px;
+    top: 55px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.8);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    display: none;
+}
+
+.giveaway_new_action_enter {
+	border: 0;
+    background: rgba(50, 168, 50, 0.5);
+    box-shadow:none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.giveaway_new_action_leave {
+	border: 0;
+    background: rgba(255,0,0, 0.5);
+    box-shadow:none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+#giveaway_new_title {
+	font-size: 140%;
+	font-style: italic;
+	font-weight: bold;
+}
+
+#giveaway_new_name {
+	font-size: 140%;
+	font-style: italic;
+	font-weight: bold;
+}
+
+#giveaway_new_author {
+	font-size: 140%;
+	font-style: italic;
+	font-weight: bold;
+}
+
+#giveaway_new_remaining {
+	font-size: 140%;
+	font-style: italic;
+	font-weight: bold;
+}
+
+#giveaway_claim_info {
+	position: fixed;
+    width: 300px;
+    left: 10px;
+    right: 25px;
+    top: 55px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.8);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    display: none;
+}
+
+#giveaway_claim_title {
+	font-size: 140%;
+	font-style: italic;
+	font-weight: bold;
+}
+
+#giveaway_claim_name {
+	font-size: 140%;
+	font-style: italic;
+	font-weight: bold;
+}
+
+#giveaway_claim_author {
+	font-size: 140%;
+	font-style: italic;
+	font-weight: bold;
+}
+
+#giveaway_claim_winner {
+	font-size: 140%;
+	font-style: italic;
+	font-weight: bold;
+	color: rgba(255, 204, 0);
+}
+
+#giveaway_claim_remaining {
+	font-size: 140%;
+	font-style: italic;
+	font-weight: bold;
+}
+
+#giveaway_claim_claim {
+	border: 0;
+    background: rgba(50, 168, 50, 0.5);
+    box-shadow:none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    margin-left: 5px;
+	display: none;
+}
+
+#giveaway_claim_time_remaining_label {
+	color: rgb(244, 66, 66);
+}
+
 #giveaway_submission_img {
     width: 20px;
     height: 20px;
     position: fixed;
-    left: 47px;
+    left: 44px;
     top: 22px;
     z-index: 2;
     border-radius: 5px;
@@ -351,5 +570,26 @@ tr, td {
 
 .wins_sections {
 	padding-left: 10px;
+	
+}
+
+#redemptions_toggle {
 	font-weight: bold;
+	color: #ff6666;
+	float: right;
+	padding-right: 10px;
+	padding-top: 3px;
+	font-size: 70%;
+}
+
+.exgame_redeem_important {
+	display: none !important;
+}
+
+.exgames_redeem {
+	
+}
+
+.listing_redeem {
+	color: #ff6666;
 }
