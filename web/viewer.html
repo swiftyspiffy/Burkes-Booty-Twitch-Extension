@@ -16,27 +16,27 @@
 		<button type="button" id="under_maintenance_retry">RETRY</button>
 	</div>
 	<div id="wins">
-        <a href="#" id="wins_link">
+        <a href="#" id="wins_link" title="Giveaway Wins">
             <img src="../shared_assets/wins.png" id="wins_img">
         </a>
     </div>
     <div id="credit">
-        <a href="#" id="credit_link">
+        <a href="#" id="credit_link" title="About">
             <img src="../shared_assets/clippy.jpg" id="credit_img">
         </a>
     </div>
     <div id="settings">
-        <a href="#" id="settings_link">
+        <a href="#" id="settings_link" title="Extension Settings">
             <img src="../shared_assets/gear.png" id="settings_img">
         </a>
     </div>
-    <div id="giveaway_submission">
+    <div id="giveaway_submission" title="Giveaway Submission Form">
         <a href="#" id="giveaway_submission_link">
             <img src="../shared_assets/giveaway.png" id="giveaway_submission_img">
         </a>
     </div>
 	<div id="time">
-		<a href="#" id="time_link">
+		<a href="#" id="time_link" title="Burke Uptime">
 			<img src="../shared_assets/clock.png" id="time_img">
 		</a>
 	</div>
@@ -48,6 +48,8 @@
             Burke's Booty Extension<br><br>
             <span class="credit_describe">Developed by:</span> swiftyspiffy<br>
             <span class="credit_describe">Intended use:</span> BurkeBlack<br>
+			<br><br><br>
+			Use <i><b>!ext</b></i> in chat to learn more about Burke's Booty extension.
         </span>
     </div>
 	<div id="giveaway_new_info">
@@ -71,9 +73,10 @@
 		<span id="giveaway_claim_time_remaining_label">Claim Time Remaining</span><br>
 		<span id="giveaway_claim_remaining">Loading...</span><br><br>
 		<button type="button" id="giveaway_claim_claim">Claim Win!</button>
+		<button type="button" id="giveaway_claim_pass">Pass!</button>
 	</div>
     <div id="giveaway_submission_info">
-        <span>BurkeBlack Giveaway Submission</span><br><br>
+        <span>Giveaway Submission Form</span><br><br>
         <span>Giveaway Name: </span><br><input type="text" id="giveaway_name"><br>
         <span>Giveaway Donator: </span><br><input type="text" id="giveaway_donator"><br>
         <span>Giveaway Type: </span><br>
@@ -94,7 +97,7 @@
     </div>
 	<div id="time_info">
 		<div id="time_stream">
-			<span id="time_stream_entry">BurkeBlack is currently streaming!</span><br>
+			<span id="time_stream_entry">BurkeBlack is currently <span id="online_emphasis">ONLINE!</span></span><br><br>
 			He has been streaming...<br>
 			<span id="time_stream_game">Loading...</span><br><br>
 			He has been streaming for...<br>
@@ -103,7 +106,7 @@
 			<span id="time_stream_completion_in">Loading...</span>
 		</div>
 		<div id="time_schedule">
-			<span id="time_schedule_entry">BurkeBlack is currently offline!</span><br>
+			<span id="time_schedule_entry">BurkeBlack is currently <span id="offline_emphasis">OFFLINE!</span></span><br><br>
 			His next stream should be on...<br>
 			<span id="time_schedule_date">Loading...</span><br>
 			@<br>
@@ -113,10 +116,10 @@
 		</div>
 	</div>
 	<div id="wins_info">
-		<span class="wins_sections">Raffle Wins</span><br>
-		<table id="raffle_wins"></table><br>
-		<span id="exgames_title" class="wins_sections">!Game Redemptions</span><a id="redemptions_toggle" href="#">Redeem !Game</a><br>
+		<span id="exgames_title" class="wins_sections">!Game Redemptions</span><a id="redemptions_toggle" href="#">Redeem !Games</a><br>
 		<table id="exgame_redemptions"></table>
+		<span class="wins_sections" id="giveaway_wins_title">Giveaway Wins</span><br>
+		<table id="raffle_wins"></table>
 		<table id="exgame_redeem" class="exgame_redeem_important"></table>
 	</div>
     <div id="settings_info">
@@ -129,9 +132,7 @@
         <div id="soundbyte_data">
             <input type="text" id="soundbyte_search">
             <select id="soundbyte_genre"></select>
-            <table id="soundbyte_table">
-                <tbody id="soundbyte_Table_body"></tbody>
-            </table>
+			<table id="soundbyte_table"></table>
             <div id="pagination">
                 <table id="pagination_table">
                     <tr>

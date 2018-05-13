@@ -2,9 +2,10 @@ var panel_token;
 var payload;
 var announce = true;
 var authenticated = false;
-var version = 9;
+var version = 12;
 var platform = "web";
 var username;
+var initialRender = false;
 var base_api = "https://burkeblack.tv/extensions/burkes_booty/api.php";
 
 window.Twitch.ext.onAuthorized(function(auth) {
@@ -12,9 +13,12 @@ window.Twitch.ext.onAuthorized(function(auth) {
     var sections = auth.token.split('.');
     payload = JSON.parse(window.atob(sections[1]));
     if(payload.user_id) {
-        $('#auth').hide();
-        $('#welcome').html("Logging you in...");
-        setTimeout(authing, 2000);
+		if(!initialRender) {
+			$('#auth').hide();
+			$('#welcome').html("Logging you in...");
+			initialRender = true;
+			setTimeout(authing, 2000);
+		}
     } else {
         $('#stats').hide();
         $('#welcome').show();
@@ -93,6 +97,9 @@ $(document).ready(function() {
 	$('#giveaway_claim_claim').click(function() {
 		handleGiveawayClaimClaim();
 	});
+	$('#giveaway_claim_pass').click(function() {
+		handleGiveawayClaimPass();
+	});
 	$('#soundbyte_search').on('keypress', function (e) {
         if(e.which === 13){
             $('#page').val("1");
@@ -121,10 +128,10 @@ $(document).ready(function() {
     $('#refresh_stats').click(function(){
 		if($("#soundbytes").is(':visible')) {
 			getStats(true);
-			alertSuccess("Doubloon/soundbyte credits refreshed!");
+			alertSuccess("Doubloons & Soundbyte Credits Refreshed");
 		} else if($('#wins_info').is(':visible')) {
 			getWinnings();
-			alertSuccess("Raffle and !Games refreshed!");
+			alertSuccess("Wins and !Games refreshed!");
 		}
     });
 });
@@ -236,7 +243,7 @@ function getStats(skipMsg) {
 			platform: platform
         },
         dataType: 'json',
-        success: function(data) {;
+        success: function(data) {
             if(data.successful) {
                 $('#pagination').show();
                 username = data.username;
@@ -246,7 +253,10 @@ function getStats(skipMsg) {
                 $('#pagination').hide();
                 alertFail(data.message);
             }
-        }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			underMaintenance("Request to server failed.", "Unable to contact server. Too busy?")
+		}
     });
 }
 
@@ -277,7 +287,10 @@ function getGenres() {
                 $('#pagination').hide();
                 alertFail(data.message);
             }
-        }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			underMaintenance("Request to server failed.", "Unable to contact server. Too busy?")
+		}
     });
 }
 
@@ -295,7 +308,7 @@ function getSoundbytes(searchText, searchGenre, page) {
         success: function(data) {
             if(data.successful) {
                 $('#pagination').show();
-                $('#soundbyte_Table_body').empty();
+                $('#soundbyte_table').empty();
                 var soundbytes = data.soundbytes;
                 if(data.page_left)
                     $('#pag_left_button').show();
@@ -307,10 +320,10 @@ function getSoundbytes(searchText, searchGenre, page) {
                     $('#pag_right_button').hide();
                 $.each(soundbytes, function(ind, soundbyte) {
                     var soundbyteData = '<tr>\n' +
-                        '                    <td>' + soundbyte.text + '</td>\n' +
+                        '                    <td class="info_cell">' + soundbyte.text + '</td>\n' +
                         '                    <td class="send_cell"><button type="button" class="btn_send" id="sb_' + soundbyte.id + '">Send!</button></td>\n' +
                         '                </tr>';
-                    $('#soundbyte_Table_body').append(soundbyteData);
+                    $('#soundbyte_table').append(soundbyteData);
                     $('#sb_' + soundbyte.id).on('click', function() {
                         sendSoundbyte(soundbyte.id);
                     });
@@ -320,7 +333,10 @@ function getSoundbytes(searchText, searchGenre, page) {
                 $('#pagination').hide();
                 alertFail(data.message);
             }
-        }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			underMaintenance("Request to server failed.", "Unable to contact server. Too busy?")
+		}
     });
 }
 
@@ -346,7 +362,10 @@ function sendSoundbyte(soundbyteId) {
 				handleErrorCodes(data);
                 alertFail(data.message);
             }
-        }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			underMaintenance("Request to server failed.", "Unable to contact server. Too busy?")
+		}
     });
 }
 
@@ -379,7 +398,10 @@ function getWinnings() {
 				handleErrorCodes(data);
                 alertFail(data.message);
             }
-        }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			underMaintenance("Request to server failed.", "Unable to contact server. Too busy?")
+		}
     });
 }
 
@@ -393,16 +415,26 @@ function insertExGamesIntoTable(id, game, donator) {
 	$('#exgame_redeem').append(row);
 }
 
+var alertSuccessTimer;
 function alertSuccess(msg) {
     $('#success_msg').html(msg);
     $('#fail').hide();
-    $('#success').show();
+    $('#success').fadeIn();
+	alertSuccessTimer = setInterval(function() {
+		clearInterval(alertSuccessTimer);
+		$('#success').fadeOut();
+	}, 10000);
 }
 
+var alertFailTimer;
 function alertFail(msg) {
     $('#fail_msg').html(msg);
     $('#success').hide();
-    $('#fail').show();
+    $('#fail').fadeIn();
+	alertFailTimer = setInterval(function() {
+		clearInterval(alertFailTimer);
+		$('#fail').fadeOut();
+	}, 10000);
 }
 
 function clearGiveawaySubmissionInputs() {
@@ -434,7 +466,10 @@ function submitGiveaway(name, donator, type, data, doubloons, non_sub_only) {
 				handleErrorCodes(data);
                 alertFail(data.message);
             }
-        }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			underMaintenance("Request to server failed.", "Unable to contact server. Too busy?")
+		}
     });
 }
 
@@ -600,19 +635,19 @@ function getTimeStringRawSeconds(seconds) {
 	
 	var retStr = "";
 	if(hours > 0) {
-		retStr = hours + " hour(s)";
+		retStr = hours + " hrs";
 	}
 	if(minutes > 0) {
 		if(retStr == "")
-			retStr = minutes + " minute(s)";
+			retStr = minutes + " mins";
 		else
-			retStr += ",<br>" + minutes + " minute(s)";
+			retStr += ",<br>" + minutes + " mins";
 	}
 	if(seconds > 0) {
 		if(retStr == "")
-			retStr = seconds + " second(s)";
+			retStr = seconds + " secs";
 		else
-			retStr += ",<br>" + seconds + " seconds(s)";
+			retStr += ",<br>" + seconds + " secs";
 	}
 	return retStr;
 }
@@ -636,11 +671,24 @@ function handleAnnounce(res, set = true) {
 	announce = res;
 }
 
+function cleanMenuIcons() {
+	$('#wins').find('img').attr('src', '../shared_assets/wins.png');
+	$('#credit').find('img').attr('src', '../shared_assets/clippy.jpg');
+	$('#settings').find('img').attr('src', '../shared_assets/gear.png');
+	$('#giveaway_submission').find('img').attr('src', '../shared_assets/giveaway.png');
+	$('#time').find('img').attr('src', '../shared_assets/clock.png');
+	$('#stats').show();
+	$('#messages').show();
+}
+
 function handleMenuLinks(clicked_on, callback = null) {
 	var clicked_data = '#' + clicked_on + '_info';
 	if($(clicked_data).is(':visible')) {
 		$(clicked_data).hide();
-		$('#soundbytes').show();
+		if(authenticated) {
+			$('#soundbytes').show();
+			cleanMenuIcons();
+		}
 	} else {
 		$('#wins_info').hide();
 		$('#credit_info').hide();
@@ -649,6 +697,12 @@ function handleMenuLinks(clicked_on, callback = null) {
 		$('#soundbytes').hide();
 		$('#time_info').hide();
 		$(clicked_data).show();
+		cleanMenuIcons();
+		$('#' + clicked_on).find('img').attr('src', '../shared_assets/soundbytes.png');
+		if(clicked_on == "credit") {
+			$('#stats').hide();
+			$('#messages').hide();
+		}
 		if(callback != null)
 			callback();
 	}
@@ -676,7 +730,7 @@ function hideMenuLinks() {
 
 function showMenuLinks() {
 	$('#wins').show();
-	$('#credits').show();
+	$('#credit').show(); 
 	$('#giveaway_submission').show();
 	$('#settings').show();
 	$('#time').show();
@@ -692,6 +746,7 @@ function handleErrorCodes(data) {
 	}
 }
 
+var prevSoundbyteCreditCount = 0;
 function handleRedeemToggle() {
 	if($('#exgame_redemptions').is(':visible'))
 		showExGames();
@@ -700,19 +755,30 @@ function handleRedeemToggle() {
 }
 
 function showExGames() {
+	$('#soundbyte_credits').html("!Game Credits");
+	prevSoundbyteCreditCount = $('#soundbyte_credit_count').html();
+	$('#soundbyte_credit_count').html("");
 	getAvailableExGames();
 	$('#exgame_redemptions').hide();
+	$('#giveaway_wins_title').hide();
 	$('#exgame_redeem').removeClass("exgame_redeem_important");
+	$('#exgame_redeem').addClass("exgame_redeem_height_important");
 	$('#exgame_redeem').addClass("exgame_redeem");
+	$('#raffle_wins').hide();
 	$('#redemptions_toggle').html("View !Game Redemptions");
 	$('#exgames_title').html("Available !Games");
 }
 
 function showExGameRedemptions() {
+	$('#soundbyte_credits').html("Soundbyte Credits");
+	$('#soundbyte_credit_count').html(prevSoundbyteCreditCount);
 	getWinnings();
 	$('#exgame_redeem').addClass("exgame_redeem_important");
+	$('#exgame_redeem').removeClass("exgame_redeem_height_important");
 	$('#exgame_redeem').removeClass("exgame_redeem");
 	$('#exgame_redemptions').show();
+	$('#giveaway_wins_title').show();
+	$('#raffle_wins').show();
 	$('#redemptions_toggle').html("Redeem !Game");
 	$('#exgames_title').html("!Game Redemptions");
 }
@@ -737,6 +803,7 @@ function getAvailableExGames() {
 				$.each(availableExGames, function(id, game) {
 					insertExGamesIntoTable(game['id'], game['name'], game['donator']);
 				});
+				$('#soundbyte_credit_count').html(data['!game_credits']);
             } else {
 				handleErrorCodes(data);
                 alertFail(data.message);
@@ -825,9 +892,11 @@ function handleGiveawayClaim(payload) {
 	$('#giveaway_claim_remaining').html(getTimeStringRawSeconds(claimEndsIn));
 	if(payload['winner'].toLowerCase() == username.toLowerCase()) {
 		$('#giveaway_claim_claim').show();
+		$('#giveaway_claim_pass').show();
 		alertSuccess("You won the raffle! Claim it!");
 	} else {
 		$('#giveaway_claim_claim').hide();
+		$('#giveaway_claim_pass').hide();
 		alertFail(payload['winner'] + " won the raffle!");
 	}
 	$('#giveaway_claim_info').show();
@@ -845,11 +914,27 @@ function handleGiveawayClear(payload) {
 	claimEndsIn = 0;
 	giveawayEndsIn = 0;
 	$('#giveaway_claim_claim').hide();
+	$('#giveaway_claim_pass').hide();
 	hideAllUIs();
 	$('#giveaway_new_action').removeClass("giveaway_new_action_leave");
 	$('#giveaway_new_action').addClass("giveaway_new_action_enter");
 	$('#giveaway_new_action').html("Enter Giveaway!");
-	alertSuccess("Giveaway has ended!");
+	showMenuLinks();
+	if(payload.hasOwnProperty("optional_arg")) {
+		var arg = payload["optional_arg"];
+		var val = payload["optional_arg_value"];
+		switch(arg) {
+			case "won":
+				alertSuccess(val + " has won and claimed!");
+				break;
+			default:
+				alertSuccess("Giveaway has ended!");
+				break;
+		}
+	} else {
+		alertSuccess("Giveaway has ended!");
+	}
+	
 	$('#soundbytes').show();
 	
 }
@@ -896,6 +981,10 @@ function handleGiveawayClaimClaim() {
 	giveawayClaim(giveawayId);
 }
 
+function handleGiveawayClaimPass() {
+	giveawayPass(giveawayId);
+}
+
 function giveawayEnter(giveawayId) {
 	var url = base_api + '?action=giveaway_enter&giveaway_id=' + giveawayId;
 	
@@ -916,7 +1005,10 @@ function giveawayEnter(giveawayId) {
 				handleErrorCodes(data);
                 alertFail(data.message);
             }
-        }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			underMaintenance("Request to server failed.", "Unable to contact server. Too busy?")
+		}
     });
 }
 
@@ -940,7 +1032,37 @@ function giveawayLeave(giveawayId) {
 				handleErrorCodes(data);
                 alertFail(data.message);
             }
-        }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			underMaintenance("Request to server failed.", "Unable to contact server. Too busy?")
+		}
+    });
+}
+
+function giveawayPass(giveawayId) {
+	var url = base_api + '?action=giveaway_pass&giveaway_id=' + giveawayId;
+	
+	$.ajax({
+        url: url,
+        type: 'get',
+        headers: {
+            "x-extension-jwt": panel_token,
+            accept: "application/json",
+            version: version,
+			platform: platform
+        },
+        dataType: 'json',
+        success: function(data) {
+            if(data.successful) {
+                alertSuccess("Successfully passed giveaway!");
+            } else {
+				handleErrorCodes(data);
+                alertFail(data.message);
+            }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			underMaintenance("Request to server failed.", "Unable to contact server. Too busy?")
+		}
     });
 }
 
@@ -964,7 +1086,10 @@ function giveawayClaim(giveawayId) {
 				handleErrorCodes(data);
                 alertFail(data.message);
             }
-        }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			underMaintenance("Request to server failed.", "Unable to contact server. Too busy?")
+		}
     });
 }
 

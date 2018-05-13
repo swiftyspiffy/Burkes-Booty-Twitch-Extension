@@ -2,22 +2,26 @@ var panel_token;
 var payload;
 var announce = true;
 var authenticated = false;
-var version = 9;
-var welcomeMessage = "This release brings support for real time giveaways to the extension! - <b>swiftyspiffy</b>";
+var version = 12;
+var welcomeMessage = "This release brings bug fixes, UI changes for connection errors, and support for Passing giveaways! - <b>swiftyspiffy</b>";
 var platform = "mobile";
 var username;
 var userid;
 var twitch = window.Twitch.ext;
 var base_api = "https://burkeblack.tv/extensions/burkes_booty/api.php";
+var initialRender = false;
 
 twitch.onAuthorized(function(auth) {
     panel_token = auth.token;
     var sections = auth.token.split('.');
     payload = JSON.parse(window.atob(sections[1]));
     if(payload.user_id) {
-		$('#onboarding').hide();
-        $('#intro').html("Logging you in...");
-        setTimeout(authing, 2000);
+		if(!initialRender) {
+			$('#onboarding').hide();
+			$('#intro').html("Logging you in...");
+			initialRender = true;
+			setTimeout(authing, 2000);
+		}
     }
 });
 
@@ -87,6 +91,9 @@ $(document).ready(function() {
 	});
 	$('#realtime_giveaway_claim_action').click(function() {
 		handleGiveawayClaimAction();
+	});
+	$('#realtime_giveaway_claim_pass').click(function() {
+		handleGiveawayClaimPass();
 	});
 	$('#checkServer').click(function() {
 		checkServerStatus();
@@ -277,7 +284,10 @@ function getStats(check = false) {
 				handleErrorCodes(data);
 				checkServerStatus(true);
             }
-        }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			launchCaptive("Unable to connect to server. Too busy?");
+		}
     });
 }
 
@@ -312,7 +322,10 @@ function getUIs() {
             } else {
 				handleErrorCodes(data);
             }
-        }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			launchCaptive("Unable to connect to server. Too busy?");
+		}
     });
 }
 
@@ -340,7 +353,10 @@ function getGenres() {
             } else {
 				handleErrorCodes(data);
             }
-        }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			launchCaptive("Unable to connect to server. Too busy?");
+		}
     });
 }
 
@@ -372,7 +388,10 @@ function getWinnings() {
             } else {
 				handleErrorCodes(data);
             }
-        }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			launchCaptive("Unable to connect to server. Too busy?");
+		}
     });
 }
 
@@ -415,7 +434,10 @@ function getSoundbytes(searchText, searchGenre, page) {
             } else {
 				handleErrorCodes(data);
             }
-        }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			launchCaptive("Unable to connect to server. Too busy?");
+		}
     });
 }
 
@@ -464,7 +486,10 @@ function sendSoundbyte(soundbyteId) {
 				else
 					showDialog("Soundbyte Send Error!", "Your soundbyte was not sent to the stream because: \n" + data.message, false);
             }
-        }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			launchCaptive("Unable to connect to server. Too busy?");
+		}
     });
 }
 
@@ -580,7 +605,10 @@ function handleFeedbackSubmit() {
             } else {
 				handleErrorCodes(data);
             }
-        }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			launchCaptive("Unable to connect to server. Too busy?");
+		}
     });
 }
 
@@ -604,7 +632,10 @@ function giveawayEnter(giveawayId) {
 				handleErrorCodes(data);
                 showDialog("Enter Giveaway", data.message, false);
             }
-        }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			launchCaptive("Unable to connect to server. Too busy?");
+		}
     });
 }
 
@@ -628,7 +659,37 @@ function giveawayLeave(giveawayId) {
 				handleErrorCodes(data);
                 showDialog("Left Giveaway", data.message, false);
             }
-        }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			launchCaptive("Unable to connect to server. Too busy?");
+		}
+    });
+}
+
+function giveawayPass(giveawayId) {
+	var url = base_api + '?action=giveaway_pass&giveaway_id=' + giveawayId;
+	
+	$.ajax({
+        url: url,
+        type: 'get',
+        headers: {
+            "x-extension-jwt": panel_token,
+            accept: "application/json",
+            version: version,
+			platform: platform
+        },
+        dataType: 'json',
+        success: function(data) {
+            if(data.successful) {
+				showDialog("Giveaway Pass", "Successfully passed giveaway!", true);
+            } else {
+				handleErrorCodes(data);
+				showDialog("Giveaway Pass", data.message, false);
+            }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			launchCaptive("Unable to connect to server. Too busy?");
+		}
     });
 }
 
@@ -652,7 +713,10 @@ function giveawayClaim(giveawayId) {
 				handleErrorCodes(data);
 				showDialog("Giveaway Claim", data.message, false);
             }
-        }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			launchCaptive("Unable to connect to server. Too busy?");
+		}
     });
 }
 
@@ -696,6 +760,10 @@ function handleGiveawayNewAction() {
 
 function handleGiveawayClaimAction() {
 	giveawayClaim(giveawayId);
+}
+
+function handleGiveawayClaimPass() {
+	giveawayPass(giveawayId);
 }
 
 function hideAllUIs() {
@@ -755,8 +823,10 @@ function handleGiveawayClaim(payload) {
 	$('#realtime_giveaway_claim_winner').html(payload['winner']);
 	if(payload['winner'].toLowerCase() == username.toLowerCase()) {
 		$('#realtime_giveaway_claim_action').show();
+		$('#realtime_giveaway_claim_pass').show();
 	} else {
 		$('#realtime_giveaway_claim_action').hide();
+		$('#realtime_giveaway_claim_pass').hide();
 	}
 	hideAllUIs();
 	$('#main_nav').hide();
@@ -783,6 +853,20 @@ function handleGiveawayClear(payload) {
 	$('#realtime_giveaway_action').html("Enter Giveaway!");
 	$('#main_nav').show();
 	showUI("soundbytes");
+	if(payload.hasOwnProperty("optional_arg")) {
+		var arg = payload["optional_arg"];
+		var val = payload["optional_arg_value"];
+		switch(arg) {
+			case "won":
+				showDialog("Giveaway Ended", val + " has won and claimed the giveaway! Congratulate them!", true);
+				break;
+			default:
+				// do nothing
+				break;
+		}
+	} else {
+		// do nothing
+	}
 }
 
 // source: https://stackoverflow.com/questions/4656843/jquery-get-querystring-from-url

@@ -85,7 +85,11 @@ tr, td {
 }
 
 .send_cell {
-    width: 30%;
+    width: 20%;
+}
+
+.info_cell {
+	width: 100%;
 }
 
 #stats {
@@ -112,6 +116,17 @@ tr, td {
     border-radius: 10px;
 }
 
+#soundbyte_table td, th {
+    text-align: left;
+    padding: 2px;
+	font-size: 60%;
+}
+
+#soundbyte_table tr:nth-child(even) {
+    background-color: #666699;
+	display: table;
+}
+
 #soundbyte_search {
     margin-left: 5px;
     margin-top: 5px;
@@ -125,11 +140,14 @@ tr, td {
 }
 
 #soundbyte_table {
-    margin-left: 8px;
-    margin-top: 5px;
-    width: 283px;
-    height: 285px;
-    color: white;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 93%;
+    height: 280px;
+    overflow-y: scroll;
+    display: block;
+    padding-left: 10px;
+	padding-top: 10px;
 }
 
 .btn_send {
@@ -211,7 +229,7 @@ tr, td {
 	width: 20px;
     height: 20px;
     position: fixed;
-    right: 48px;
+    right: 68px;
     top: 23px;
     z-index: 2;
     border-radius: 5px;
@@ -250,7 +268,7 @@ tr, td {
     width: 20px;
     height: 20px;
     position: fixed;
-    left: 18px;
+    right: 44px;
     top: 23px;
     z-index: 2;
     border-radius: 5px;
@@ -294,7 +312,7 @@ tr, td {
 	width: 25px;
     height: 25px;
     position: fixed;
-    left: 67px;
+    left: 47px;
     top: 20px;
     z-index: 2;
     border-radius: 5px;
@@ -356,15 +374,11 @@ tr, td {
 #time_schedule_entry {
 	font-size: 140%;
 	font-style: italic;
-	font-weight: bold;
-	color: red;
 }
 
 #time_stream_entry {
 	font-size: 140%;
 	font-style: italic;
-	font-weight: bold;
-	color: green;
 }
 
 #time_schedule_countdown {
@@ -487,6 +501,17 @@ tr, td {
 	display: none;
 }
 
+#giveaway_claim_pass {
+	border: 0;
+    background: rgba(255,0,0, 0.5);
+    box-shadow:none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    margin-left: 5px;
+	display: none;
+}
+
 #giveaway_claim_time_remaining_label {
 	color: rgb(244, 66, 66);
 }
@@ -495,7 +520,7 @@ tr, td {
     width: 20px;
     height: 20px;
     position: fixed;
-    left: 44px;
+    left: 20px;
     top: 22px;
     z-index: 2;
     border-radius: 5px;
@@ -586,8 +611,22 @@ tr, td {
 	display: none !important;
 }
 
+.exgame_redeem_height_important {
+	height: 300px !important;
+}
+
 .exgames_redeem {
 	
+}
+
+#offline_emphasis {
+	color: red;
+	font-weight: bold;
+}
+
+#online_emphasis {
+	color: green;
+	font-weight: bold;
 }
 
 .listing_redeem {
