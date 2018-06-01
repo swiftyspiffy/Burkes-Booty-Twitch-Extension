@@ -2,7 +2,7 @@ var panel_token;
 var payload;
 var announce = true;
 var authenticated = false;
-var version = 12;
+var version = 13;
 var platform = "web";
 var username;
 var initialRender = false;
@@ -57,6 +57,9 @@ $(document).ready(function() {
 	platform = getPlatform(getUrlVars());
 	$(document).on('click', '.listing_redeem', function(el) {
 		handleExGameRedeem(el.target.id);
+	});
+	$('#auth_link').click(function() {
+		window.Twitch.ext.actions.requestIdShare();
 	});
 	$('#redemptions_toggle').click(function() {
 		handleRedeemToggle();

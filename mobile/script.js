@@ -2,8 +2,8 @@ var panel_token;
 var payload;
 var announce = true;
 var authenticated = false;
-var version = 12;
-var welcomeMessage = "This release brings bug fixes, UI changes for connection errors, and support for Passing giveaways! - <b>swiftyspiffy</b>";
+var version = 13;
+var welcomeMessage = "This release brings support for redeeming !games, as well as authentication via links/buttons, and bug fixes! - <b>swiftyspiffy</b>";
 var platform = "mobile";
 var username;
 var userid;
@@ -53,6 +53,9 @@ twitch.listen('broadcast', function (target, contentType, payload) {
 $(document).ready(function() {
 	platform = getPlatform(getUrlVars());
 	showUI("onboarding", false);
+	$('#auth_link').click(function() {
+		twitch.actions.requestIdShare();
+	});
 	$('#user_stats_link').click(function() {
 		showUI("user_stats");
 	});
@@ -75,6 +78,7 @@ $(document).ready(function() {
 		showUI("past_redemptions");
 	});
 	$('#redeem_now_link').click(function() {
+		getExGames();
 		showUI("redeem_now");
 	});
 	$('#subathon_link').click(function() {
@@ -111,6 +115,10 @@ $(document).ready(function() {
 	$('body').on('click', '.btn_send', function() {
 		var sbId = getSbIdFromId(this.id);
 		sendSoundbyte(sbId);
+	});
+	$('body').on('click', '.exgames-button', function() {
+		var exgameId = getExGameIdFromId(this.id);
+		redeemExGame(exgameId);
 	});
 	
 	$('#pagination_left').click(function() {
@@ -220,6 +228,10 @@ function checkServerTick() {
 }
 
 function getSbIdFromId(id) {
+	return parseInt(id.split("_")[1]);
+}
+
+function getExGameIdFromId(id) {
 	return parseInt(id.split("_")[1]);
 }
 
@@ -395,6 +407,51 @@ function getWinnings() {
     });
 }
 
+function getExGames() {
+	if(panel_token == null)
+        return;
+    $.ajax({
+        url: base_api + '?action=available_exgames',
+        type: 'get',
+        headers: {
+            "x-extension-jwt": panel_token,
+            accept: "application/json",
+            version: version,
+			platform: platform
+        },
+        dataType: 'json',
+        success: function(data) {
+            if(data.successful) {
+				$('#exgames_redemptions_now_table').empty();
+                var credits = data['!game_credits'];
+				var available = data['available_exgames'];
+				var redeemable = credits > 0;
+				$.each(available, function(id, win) {
+					var id = win['id'];
+					var name = win['name'];
+					var donator = win['donator'];
+					insertGameIntoExGamesTable(id, name, redeemable);
+				});
+            } else {
+				handleErrorCodes(data);
+            }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			launchCaptive("Unable to connect to server. Too busy?");
+		}
+    });
+}
+
+function insertGameIntoExGamesTable(id, game, redeemable) {
+	var row = "<tr><td>" + game + "</td>";
+	if(redeemable) {
+		row += '<td><button type="submit" id="exgames_' + id + '" class="btn btn-success exgames-button">Redeem</button></td></tr>';
+	} else {
+		row += '<td><span class="badge badge-danger">No !Game Credit</span></td>';
+	}
+	$('#exgames_redemptions_now_table').append(row);
+}
+
 function insertWinIntoTable(table, game, key, date) {
 	var row = "<tr><td>" + game + "</td><td>" + key + "</td></tr>";
 	$('#' + table).append(row);
@@ -485,6 +542,37 @@ function sendSoundbyte(soundbyteId) {
 					handleErrorCodes(data);
 				else
 					showDialog("Soundbyte Send Error!", "Your soundbyte was not sent to the stream because: \n" + data.message, false);
+            }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			launchCaptive("Unable to connect to server. Too busy?");
+		}
+    });
+}
+
+function redeemExGame(exgameId) {
+	var url = base_api + '?action=redeem_exgame&id=' + exgameId;
+
+    $.ajax({
+        url: url,
+        type: 'get',
+        headers: {
+            "x-extension-jwt": panel_token,
+            accept: "application/json",
+            version: version,
+			platform: platform
+        },
+        dataType: 'json',
+        success: function(data) {
+            if(data.successful) {
+				showUI("past_redemptions", true);
+				getWinnings();
+				showDialog("!Game successfully redeemed!", "You successfully redeemed the !game listing!");
+            } else {
+				if(data.hasOwnProperty("code") && data.code == "1")
+					handleErrorCodes(data);
+				else
+					showDialog("Soundbyte Send Error!", "!Game not redeemed because: \n" + data.message, false);
             }
         },
 		error: function(XMLHttpRequest, textStatus, errorThrown) {

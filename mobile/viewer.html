@@ -42,7 +42,6 @@
 					</a>
 					<div class="dropdown-menu" aria-labelledby="raffle_dropdown">
 						<a class="dropdown-item" id="raffle_wins_link">Raffle Wins</a>
-						<a class="dropdown-item" id="raffle_enter_link">Enter Raffle!</a>
 					</div>
 				</li>
 				<li class="nav-item dropdown">
@@ -55,9 +54,6 @@
 					</div>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id="subathon_link">Subathon</a>
-				</li>
-				<li class="nav-item">
 					<a class="nav-link" id="about_link">About</a>
 				</li>
 				<li class="nav-item">
@@ -68,7 +64,13 @@
 	</nav>
 	<br>
 	<div id="onboarding" class="extension_componenet">
-		<span class="text-center" id="onboarding_text">Please authenticate by clicking the BurkesBooty tab above and selecting Link Identity.</span>
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<button type="submit" id="auth_link" class="btn btn-success btn-block">Authenticate with Twitch Account</button>
+			</div>
+			<div class="col-md-1"></div>
+		</div>
 	</div>
 	<div id="user_stats" class="extension_componenet">
 		<div class="card text-white bg-secondary mb-3 user_stats_listing">
@@ -206,11 +208,19 @@
 		</div>
 	</div>
 	<div id="redeem_now" class="extension_componenet">
-		<div class="col-1"></div>
-		<div class="col-10">
-		This UI is not supported at the moment.
+		<div class="row">
+			<div class="container">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Redeem</th>
+						</tr>
+					</thead>
+					<tbody id="exgames_redemptions_now_table"></body>
+				</table>
+			</div>
 		</div>
-		<div class="col-1"></div>
 	</div>	
 	<div id="subathon" class="extension_componenet">
 		<div class="col-1"></div>

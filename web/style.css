@@ -19,6 +19,9 @@ tr, td {
     transition-delay: 1s;
     color: white;
 }
+#auth_link {
+	color: red;
+}
 #welcome {
     position: absolute;
     top: 15px;
