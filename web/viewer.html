@@ -40,6 +40,11 @@
 			<img src="../shared_assets/clock.png" id="time_img">
 		</a>
 	</div>
+	<div id="leaderboards">
+		<a href="#" id="leaderboards_link" title="Stream Leaderboards">
+			<img src="../shared_assets/leaderboard.png" id="leaderboards_img">
+		</a>
+	</div>
     <div id="auth_welcome">
         <span id="auth_welcome_msg"></span>
     </div>
@@ -117,7 +122,7 @@
 	</div>
 	<div id="wins_info">
 		<span id="exgames_title" class="wins_sections">!Game Redemptions</span><a id="redemptions_toggle" href="#">Redeem !Games</a><br>
-		<table id="exgame_redemptions"></table>
+		<table id="exgame_redemptions"></table><br>
 		<span class="wins_sections" id="giveaway_wins_title">Giveaway Wins</span><br>
 		<table id="raffle_wins"></table>
 		<table id="exgame_redeem" class="exgame_redeem_important"></table>
@@ -150,6 +155,15 @@
             </div>
         </div>
     </div>
+	<div id="leaderboards_info">
+		<select id="leaderboard_type">
+			<option id="money_donations">Monetary Donations Leaderboard</option>
+			<option id="giveaway_wins">Giveaway Wins Leaderboard</option>
+			<option id="giveaway_donations">Giveaway Donations Leaderboard</option>
+			<option id="emote_usage">Emote Usage Leaderboard</option>
+		</select><br><br>
+		<table id="leaderboard_table"></table>
+	</div>
     <div id="messages">
         <div id="success">
             <span id="success_msg"></span>

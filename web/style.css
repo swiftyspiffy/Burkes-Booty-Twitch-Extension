@@ -61,7 +61,7 @@ tr, td {
     right: 9px;
     background: rgba(0, 0, 0, 0.5);
     padding: 10px;
-    font-size: 15px;
+    font-size: 12px;
     text-align: center;
     border-radius: 10px;
     color: white;
@@ -232,7 +232,7 @@ tr, td {
 	width: 20px;
     height: 20px;
     position: fixed;
-    right: 68px;
+    right: 60px;
     top: 23px;
     z-index: 2;
     border-radius: 5px;
@@ -243,7 +243,7 @@ tr, td {
     width: 20px;
     height: 20px;
     position: fixed;
-    right: 18px;
+    right: 12px;
     top: 23px;
     z-index: 2;
     border-radius: 5px;
@@ -271,7 +271,7 @@ tr, td {
     width: 20px;
     height: 20px;
     position: fixed;
-    right: 44px;
+    right: 37px;
     top: 23px;
     z-index: 2;
     border-radius: 5px;
@@ -311,11 +311,22 @@ tr, td {
     margin: 5px;
 }
 
+#leaderboards_img {
+	width: 25px;
+    height: 25px;
+    position: fixed;
+    left: 57px;
+    top: 20px;
+    z-index: 2;
+    border-radius: 5px;
+    display: none;
+}
+
 #time_img {
 	width: 25px;
     height: 25px;
     position: fixed;
-    left: 47px;
+    left: 30px;
     top: 20px;
     z-index: 2;
     border-radius: 5px;
@@ -388,6 +399,56 @@ tr, td {
 	font-size: 140%;
 	font-style: italic;
 	font-weight: bold;
+}
+
+#leaderboards_info {
+	position: fixed;
+    width: 300px;
+    left: 10px;
+    right: 25px;
+    top: 55px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.8);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    display: none;
+}
+
+#leaderboards_info table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 93%;
+	height: 300px;
+	overflow-y: scroll;
+	display: block;
+	padding-left: 10px;
+}
+
+#leaderboards_info td, th {
+    border: 1px solid #666699;
+    text-align: left;
+    padding: 2px;
+	font-size: 60%;
+	width: 250px;
+}
+
+.leaderboard_value {
+	width: 25% !important;
+}
+
+#leaderboards_info tr:nth-child(even) {
+    background-color: #666699;
+	display: table;
+}
+
+#leaderboards_type {
+	width: 290px;
+    border-radius: 10px;
+}
+
+.leaderboard_emote_img {
+	width: 50px;
 }
 
 #giveaway_new_info {
@@ -523,7 +584,7 @@ tr, td {
     width: 20px;
     height: 20px;
     position: fixed;
-    left: 20px;
+    left: 10px;
     top: 22px;
     z-index: 2;
     border-radius: 5px;
