@@ -145,8 +145,3 @@ body {
 #realtime_giveaway_claim_winner {
 	color: rgba(255, 204, 0) !important;
 }
-
-.feedback-header {
-	font-size: 120%;
-    font-weight: bold;
-}

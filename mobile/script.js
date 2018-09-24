@@ -2,8 +2,8 @@ var panel_token;
 var payload;
 var announce = true;
 var authenticated = false;
-var version = 14;
-var welcomeMessage = "This release brings fade in/fade out UI transitions, as well as a leaderboards UI for the desktop build! - <b>swiftyspiffy</b>";
+var version = 16;
+var welcomeMessage = "This release brings support for obtaining soundbytes via bits on the desktop extension! - <b>swiftyspiffy</b>";
 var platform = "mobile";
 var username;
 var userid;
@@ -17,7 +17,7 @@ twitch.onAuthorized(function(auth) {
     payload = JSON.parse(window.atob(sections[1]));
     if(payload.user_id) {
 		if(!initialRender) {
-			$('#onboarding').fadeOut();
+			$('#onboarding').hide();
 			$('#intro').html("Logging you in...");
 			initialRender = true;
 			setTimeout(authing, 2000);
@@ -241,10 +241,10 @@ function showUI(uiName, toggle = true) {
 		var el = $('#' + ui + "_link");
 		var par = el.parent();
 		if(ui == uiName) {
-			$('#' + ui).fadeIn();
+			$('#' + ui).show();
 			par.addClass("active");
 		} else {
-			$('#' + ui).fadeOut();
+			$('#' + ui).hide();
 			par.removeClass("active");
 		}
 	});
@@ -255,7 +255,7 @@ function showUI(uiName, toggle = true) {
 
 
 function authed(_username, _doubloons, _soundbyte_credits, _userid, _subscriber) {
-	$('#toggle_button').fadeIn();
+	$('#toggle_button').show();
 	username = _username;
 	userid = _userid;
 	$('#intro').html("Hello " + username + "!");
@@ -319,18 +319,18 @@ function getUIs() {
         success: function(data) {
             if(data.successful) {
                 var uis = data.uis;
-				uis['user_stats'] ? $('#user_stats_link').fadeIn() : $('#user_stats_link').fadeOut();
-				uis['settings'] ? $('#settings_link').fadeIn() : $('#settings_link').fadeOut();
-				uis['soundbytes'] ? $('#soundbytes_link').fadeIn() : $('#soundbytes_link').fadeOut();
-				uis['submit_giveaway'] ? $('#submit_giveaway_link').fadeIn() : $('#submit_giveaway_link').fadeOut();
-				uis['time_tracker'] ? $('#time_tracker_link').fadeIn() : $('#time_tracker_link').fadeOut();
-				uis['raffle_wins'] ? $('#raffle_wins_link').fadeIn() : $('#raffle_wins_link').fadeOut();
-				uis['past_redemptions'] ? $('#past_redemptions_link').fadeIn() : $('#past_redemptions_link').fadeOut();
-				uis['redeem_now'] ? $('#redeem_now_link').fadeIn() : $('#redeem_now_link').fadeOut();
-				uis['subathon'] ? $('#subathon_link').fadeIn() : $('#subathon_link').fadeOut();
-				uis['about'] ? $('#about_link').fadeIn() : $('#about_link').fadeOut();
+				uis['user_stats'] ? $('#user_stats_link').show() : $('#user_stats_link').hide();
+				uis['settings'] ? $('#settings_link').show() : $('#settings_link').hide();
+				uis['soundbytes'] ? $('#soundbytes_link').show() : $('#soundbytes_link').hide();
+				uis['submit_giveaway'] ? $('#submit_giveaway_link').show() : $('#submit_giveaway_link').hide();
+				uis['time_tracker'] ? $('#time_tracker_link').show() : $('#time_tracker_link').hide();
+				uis['raffle_wins'] ? $('#raffle_wins_link').show() : $('#raffle_wins_link').hide();
+				uis['past_redemptions'] ? $('#past_redemptions_link').show() : $('#past_redemptions_link').hide();
+				uis['redeem_now'] ? $('#redeem_now_link').show() : $('#redeem_now_link').hide();
+				uis['subathon'] ? $('#subathon_link').show() : $('#subathon_link').hide();
+				uis['about'] ? $('#about_link').show() : $('#about_link').hide();
 				if(!uis['past_redemptions'] && !uis['redeem_now'])
-					$('#exgame_dropdown').fadeOut();
+					$('#exgame_dropdown').hide();
             } else {
 				handleErrorCodes(data);
             }
@@ -459,13 +459,13 @@ function insertWinIntoTable(table, game, key, date) {
 
 function configurePagination(left = false, right = false) {
 	if(left && parseInt($('#page').html()) != 1)
-		$('#pagination_left').fadeIn();
+		$('#pagination_left').show();
 	else
-		$('#pagination_left').fadeOut();
+		$('#pagination_left').hide();
 	if(right)
-		$('#pagination_right').fadeIn();
+		$('#pagination_right').show();
 	else
-		$('#pagination_right').fadeOut();
+		$('#pagination_right').hide();
 }
 
 function getSoundbytes(searchText, searchGenre, page) {
@@ -614,11 +614,11 @@ function getActiveRaffle() {
 						case "finished":
 							break;
 					}
-					$('#raffle_active').fadeIn();
-					$('#raffle_inactive').fadeOut();
+					$('#raffle_active').show();
+					$('#raffle_inactive').hide();
 				} else {
-					$('#raffle_active').fadeOut();
-					$('#raffle_inactive').fadeIn();
+					$('#raffle_active').hide();
+					$('#raffle_inactive').show();
 				}
             } else {
 				handleErrorCodes(data);
@@ -856,7 +856,7 @@ function handleGiveawayClaimPass() {
 
 function hideAllUIs() {
 	UIs.forEach(function(ui) {
-		$('#' + ui).fadeOut();
+		$('#' + ui).hide();
 	});
 }
 
@@ -880,10 +880,10 @@ function handleGiveawayNew(payload) {
 	$('#realtime_giveaway_title').html(payload['name']);
 	$('#realtime_giveaway_donator').html(payload['author']);
 	hideAllUIs();
-	$('#main_nav').fadeOut();
-	$('#realtime_giveaway_new').fadeIn();
-	$('#realtime_giveaway_claim').fadeOut();
-	$('#realtime_giveaway').fadeIn();
+	$('#main_nav').hide();
+	$('#realtime_giveaway_new').show();
+	$('#realtime_giveaway_claim').hide();
+	$('#realtime_giveaway').show();
 	if(giveawayEndsInTimerRunning == false) {
 		giveawayEndsInTimer = setInterval(function() { giveawayEndsInCountdown(); }, 1000);
 		giveawayEndsInTimerRunning = true;
@@ -910,17 +910,17 @@ function handleGiveawayClaim(payload) {
 	$('#realtime_giveaway_claim_donator').html(payload['author']);
 	$('#realtime_giveaway_claim_winner').html(payload['winner']);
 	if(payload['winner'].toLowerCase() == username.toLowerCase()) {
-		$('#realtime_giveaway_claim_action').fadeIn();
-		$('#realtime_giveaway_claim_pass').fadeIn();
+		$('#realtime_giveaway_claim_action').show();
+		$('#realtime_giveaway_claim_pass').show();
 	} else {
-		$('#realtime_giveaway_claim_action').fadeOut();
-		$('#realtime_giveaway_claim_pass').fadeOut();
+		$('#realtime_giveaway_claim_action').hide();
+		$('#realtime_giveaway_claim_pass').hide();
 	}
 	hideAllUIs();
-	$('#main_nav').fadeOut();
-	$('#realtime_giveaway_new').fadeOut();
-	$('#realtime_giveaway_claim').fadeIn();
-	$('#realtime_giveaway').fadeIn();
+	$('#main_nav').hide();
+	$('#realtime_giveaway_new').hide();
+	$('#realtime_giveaway_claim').show();
+	$('#realtime_giveaway').show();
 	if(claimEndsInTimerRunning == false) {
 		claimEndsInTimer = setInterval(function() { claimNewCountdown(); }, 1000);
 		claimEndsInTimerRunning = true;
@@ -939,7 +939,7 @@ function handleGiveawayClear(payload) {
 	$('#realtime_giveaway_action').removeClass("btn-danger");
 	$('#realtime_giveaway_action').addClass("btn-success");
 	$('#realtime_giveaway_action').html("Enter Giveaway!");
-	$('#main_nav').fadeIn();
+	$('#main_nav').show();
 	showUI("soundbytes");
 	if(payload.hasOwnProperty("optional_arg")) {
 		var arg = payload["optional_arg"];
