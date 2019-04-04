@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,10 +78,10 @@
 	</div>
     <div id="giveaway_submission_info">
         <span>Giveaway Submission Form</span><br><br>
-        <span>Giveaway Name: </span><br><input type="text" id="giveaway_name"><br>
-        <span>Giveaway Donator: </span><br><input type="text" id="giveaway_donator"><br>
+        <span>Giveaway Name: </span><br><input type="text" id="giveaway_name" class="giveaway_form"><br>
+        <span>Giveaway Donator: </span><br><input type="text" id="giveaway_donator" class="giveaway_form"><br>
         <span>Giveaway Type: </span><br>
-        <select id="giveaway_type">
+        <select id="giveaway_type" class="giveaway_form">
             <option value="steam_code">Steam Code</option>
             <option value="steam_gift">Steam Gift</option>
             <option value="origin_code">Origin Code</option>
@@ -89,9 +90,9 @@
             <option value="code">Serial/Code</option>
             <option value="other">Other</option>
         </select><br>
-        <span>Giveaway Key/Code/Link: </span><br><input type="text" id="giveaway_data"><br>
-        <span>Doubloon Requirement:</span><br><input type="number" id="giveaway_doubloons" value="0"><br>
-		<span>Non Subscriber Only:</span><input type="checkbox" id="giveaway_non_sub"><br><br>
+        <span>Giveaway Key/Code/Link: </span><br><input type="text" id="giveaway_data" class="giveaway_form"><br>
+        <span>Doubloon Requirement:</span><br><input type="number" id="giveaway_doubloons" value="0" class="giveaway_form"><br>
+		<span>Non Subscriber Only:</span><input type="checkbox" id="giveaway_non_sub" class="giveaway_form"><br><br>
         <button type="button" id="giveaway_clear">Clear</button>
         <button type="button" id="giveaway_submit">Submit</button>
     </div>
@@ -117,8 +118,8 @@
 	</div>
 	<div id="wins_info">
 		<span id="exgames_title" class="wins_sections">!Game Redemptions</span><a id="redemptions_toggle" href="#">Redeem !Games</a><br>
-		<table id="exgame_redemptions"></table>
-		<span class="wins_sections" id="giveaway_wins_title">Giveaway Wins</span><br>
+		<table id="exgame_redemptions"></table><br class="artificial_break">
+		<span class="wins_sections" id="giveaway_wins_title">Giveaway Wins</span><br class="artificial_break">
 		<table id="raffle_wins"></table>
 		<table id="exgame_redeem" class="exgame_redeem_important"></table>
 	</div>

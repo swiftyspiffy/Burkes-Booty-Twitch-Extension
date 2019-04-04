@@ -2,7 +2,7 @@ var panel_token;
 var payload;
 var announce = true;
 var authenticated = false;
-var version = 16;
+var version = 20;
 var platform = "web";
 var username;
 var initialRender = false;
@@ -14,17 +14,17 @@ window.Twitch.ext.onAuthorized(function(auth) {
     payload = JSON.parse(window.atob(sections[1]));
     if(payload.user_id) {
 		if(!initialRender) {
-			$('#auth').hide();
+			$('#auth').fadeOut();
 			$('#welcome').html("Logging you in...");
 			initialRender = true;
 			setTimeout(authing, 2000);
 		}
     } else {
-        $('#stats').hide();
-        $('#welcome').show();
-        $('#auth').show();
-        $('#auth_welcome').hide();
-        $('#soundbytes').hide();
+        $('#stats').fadeOut();
+        $('#welcome').fadeIn();
+        $('#auth').fadeIn();
+        $('#auth_welcome').fadeOut();
+        $('#soundbytes').fadeOut();
     }
 });
 
@@ -84,8 +84,8 @@ $(document).ready(function() {
 	});
 	$('#cell_4').click(function() {
 		if($('#products_info').is(':visible')) {
-			$('#products_info').hide();
-			$('#soundbytes').show();
+			$('#products_info').fadeOut();
+			$('#soundbytes').fadeIn();
 		} else {
 			getSoundbyteCredits();
 		}
@@ -144,8 +144,8 @@ $(document).ready(function() {
     $("#soundbyte_genre").change(function () {
         $('#soundbyte_search').val("");
         $('#page').html("1");
-        $('#pag_left_button').hide();
-        $('#pag_right_button').show();
+        $('#pag_left_button').fadeOut();
+        $('#pag_right_button').fadeIn();
         getSoundbytes($('#soundbyte_search').val(), $('#soundbyte_genre').val(), 1);
     })
     $("#pag_left_button").click( function() {
@@ -174,25 +174,25 @@ $(document).ready(function() {
 var countdown;
 function retryAuth() {
 	if(payload.user_id) {
-        $('#auth').hide();
+        $('#auth').fadeOut();
         $('#welcome').html("Logging you in...");
-		$('#under_maintenance').hide();
+		$('#under_maintenance').fadeOut();
         setTimeout(authing(false), 2000);
     } else {
-        $('#stats').hide();
-        $('#welcome').show();
-        $('#auth').show();
-        $('#auth_welcome').hide();
-        $('#soundbytes').hide();
+        $('#stats').fadeOut();
+        $('#welcome').fadeIn();
+        $('#auth').fadeIn();
+        $('#auth_welcome').fadeOut();
+        $('#soundbytes').fadeOut();
     }
 }
 
 function underMaintenance(entry, custom) {
 	var divs = ['wins', 'credit', 'settings', 'giveaway_submission', 'auth_welcome', 'credit_info', 'giveaway_submission_info', 'wins_info', 'settings_info', 'soundbytes', 'messages', 'stats', 'welcome', 'products_info', 'time_info'];
 	$.each(divs, function(ind, val) {
-		$('#' + val).hide();
+		$('#' + val).fadeOut();
 	});
-	$('#under_maintenance').show();
+	$('#under_maintenance').fadeIn();
 	$('#under_maintenance_entry').html(entry);
 	$('#under_maintenance_custom').html(custom);
 }
@@ -201,15 +201,15 @@ function handleRetryClick() {
 	$('#under_maintenance_retry').attr("disabled", "disabled");
 	countdown = setInterval(retryAuthCountdown, 1000);
 	if(payload.user_id) {
-        $('#auth').hide();
+        $('#auth').fadeOut();
         $('#welcome').html("Logging you in...");
         setTimeout(authing, 2000);
     } else {
-        $('#stats').hide();
-        $('#welcome').show();
-        $('#auth').show();
-        $('#auth_welcome').hide();
-        $('#soundbytes').hide();
+        $('#stats').fadeOut();
+        $('#welcome').fadeIn();
+        $('#auth').fadeIn();
+        $('#auth_welcome').fadeOut();
+        $('#soundbytes').fadeOut();
     }
 }
 
@@ -232,25 +232,25 @@ function authing(register = true) {
 
 function authed(username, doubloons, soundbyte_credits, skipMsg) {
     authenticated = true;
-    $('#stats').show();
-    $('#welcome').hide();
-    $('#auth').hide();
-    $('#auth_welcome').show();
+    $('#stats').fadeIn();
+    $('#welcome').fadeOut();
+    $('#auth').fadeOut();
+    $('#auth_welcome').fadeIn();
     $('#auth_welcome_msg').html("Hello " + username + "!");
     $('#doubloon_count').html(doubloons);
     $('#soundbyte_credit_count').html(soundbyte_credits);
-    $('#soundbytes').show();
-    $('#messages').show();
-    $('#giveaway_submission_img').show();
+    $('#soundbytes').fadeIn();
+    $('#messages').fadeIn();
+    $('#giveaway_submission_img').fadeIn();
     $('#giveaway_donator').val(username);
-	$('#wins_img').show();
-	$('#settings_img').show();
-	$('#time_img').show();
-	$('#under_maintenance').hide();
-	$('#wins').show();
-	$('#credit').show();
-	$('#settings').show();
-	$('#giveaway_submission').show();
+	$('#wins_img').fadeIn();
+	$('#settings_img').fadeIn();
+	$('#time_img').fadeIn();
+	$('#under_maintenance').fadeOut();
+	$('#wins').fadeIn();
+	$('#credit').fadeIn();
+	$('#settings').fadeIn();
+	$('#giveaway_submission').fadeIn();
     if(!skipMsg)
         alertSuccess("Successfully connected to your account!");
     getGenres();
@@ -280,12 +280,12 @@ function getStats(skipMsg) {
         dataType: 'json',
         success: function(data) {
             if(data.successful) {
-                $('#pagination').show();
+                $('#pagination').fadeIn();
                 username = data.username;
                 authed(data.username, data.doubloons, data.soundbyte_credits, skipMsg);
             } else {
 				handleErrorCodes(data);
-                $('#pagination').hide();
+                $('#pagination').fadeOut();
                 alertFail(data.message);
             }
         },
@@ -310,7 +310,7 @@ function getGenres() {
         dataType: 'json',
         success: function(data) {
             if(data.successful) {
-                $('#pagination').show();
+                $('#pagination').fadeIn();
                 var genres = data.genres;
                 $('#soundbyte_genre').empty();
                 $('#soundbyte_genre').append('<option selected="selected" value="all">All</option>');
@@ -319,7 +319,7 @@ function getGenres() {
                 });
             } else {
 				handleErrorCodes(data);
-                $('#pagination').hide();
+                $('#pagination').fadeOut();
                 alertFail(data.message);
             }
         },
@@ -342,17 +342,17 @@ function getSoundbytes(searchText, searchGenre, page) {
         dataType: 'json',
         success: function(data) {
             if(data.successful) {
-                $('#pagination').show();
+                $('#pagination').fadeIn();
                 $('#soundbyte_table').empty();
                 var soundbytes = data.soundbytes;
                 if(data.page_left)
-                    $('#pag_left_button').show();
+                    $('#pag_left_button').fadeIn();
                 else
-                    $('#pag_left_button').hide();
+                    $('#pag_left_button').fadeOut();
                 if(data.page_right)
-                    $('#pag_right_button').show();
+                    $('#pag_right_button').fadeIn();
                 else
-                    $('#pag_right_button').hide();
+                    $('#pag_right_button').fadeOut();
                 $.each(soundbytes, function(ind, soundbyte) {
                     var soundbyteData = '<tr>\n' +
                         '                    <td class="info_cell">' + soundbyte.text + '</td>\n' +
@@ -366,7 +366,7 @@ function getSoundbytes(searchText, searchGenre, page) {
                 });
             } else {
 				handleErrorCodes(data);
-                $('#pagination').hide();
+                $('#pagination').fadeOut();
                 alertFail(data.message);
             }
         },
@@ -454,7 +454,7 @@ function insertExGamesIntoTable(id, game, donator) {
 var alertSuccessTimer;
 function alertSuccess(msg) {
     $('#success_msg').html(msg);
-    $('#fail').hide();
+    $('#fail').fadeOut();
     $('#success').fadeIn();
 	alertSuccessTimer = setInterval(function() {
 		clearInterval(alertSuccessTimer);
@@ -465,7 +465,7 @@ function alertSuccess(msg) {
 var alertFailTimer;
 function alertFail(msg) {
     $('#fail_msg').html(msg);
-    $('#success').hide();
+    $('#success').fadeOut();
     $('#fail').fadeIn();
 	alertFailTimer = setInterval(function() {
 		clearInterval(alertFailTimer);
@@ -560,11 +560,11 @@ function setStreamTime(date) {
 }
 
 function showStreamSchedule() {
-	$('#time_stream').hide();
+	$('#time_stream').fadeOut();
 	streamScheduleUpdate();
 	if(upDownTimer == null)
 		scheduleTimer = setInterval(streamScheduleUpdate, 1000);
-	$('#time_schedule').show();
+	$('#time_schedule').fadeIn();
 }
 
 var scheduleTimer;
@@ -596,7 +596,7 @@ function streamScheduleUpdate() {
 
 var streamStartUTCDate;
 function showStreamUptime(streamCreatedDate, game) {
-	$('#time_schedule').hide();
+	$('#time_schedule').fadeOut();
 	$('#time_stream_game').html("Loading...");
 	$('#time_stream_duration').html("Loading...");
 	$('#time_stream_completion_in').html("Loading...");
@@ -609,7 +609,7 @@ function showStreamUptime(streamCreatedDate, game) {
 	}
 	$('#time_stream_game').html(game);
 	
-	$('#time_stream').show();
+	$('#time_stream').fadeIn();
 }
 
 var upDownTimer;
@@ -713,32 +713,32 @@ function cleanMenuIcons() {
 	$('#settings').find('img').attr('src', '../shared_assets/gear.png');
 	$('#giveaway_submission').find('img').attr('src', '../shared_assets/giveaway.png');
 	$('#time').find('img').attr('src', '../shared_assets/clock.png');
-	$('#stats').show();
-	$('#messages').show();
+	$('#stats').fadeIn();
+	$('#messages').fadeIn();
 }
 
 function handleMenuLinks(clicked_on, callback = null) {
 	var clicked_data = '#' + clicked_on + '_info';
 	if($(clicked_data).is(':visible')) {
-		$(clicked_data).hide();
+		$(clicked_data).fadeOut();
 		if(authenticated) {
-			$('#soundbytes').show();
+			$('#soundbytes').fadeIn();
 			cleanMenuIcons();
 		}
 	} else {
-		$('#wins_info').hide();
-		$('#credit_info').hide();
-		$('#giveaway_submission_info').hide();
-		$('#settings_info').hide();
-		$('#soundbytes').hide();
-		$('#time_info').hide();
-		$('#products_info').hide();
-		$(clicked_data).show();
+		$('#wins_info').fadeOut();
+		$('#credit_info').fadeOut();
+		$('#giveaway_submission_info').fadeOut();
+		$('#settings_info').fadeOut();
+		$('#soundbytes').fadeOut();
+		$('#time_info').fadeOut();
+		$('#products_info').fadeOut();
+		$(clicked_data).fadeIn();
 		cleanMenuIcons();
 		$('#' + clicked_on).find('img').attr('src', '../shared_assets/soundbytes.png');
 		if(clicked_on == "credit") {
-			$('#stats').hide();
-			$('#messages').hide();
+			$('#stats').fadeOut();
+			$('#messages').fadeOut();
 		}
 		if(callback != null)
 			callback();
@@ -746,32 +746,32 @@ function handleMenuLinks(clicked_on, callback = null) {
 }
 
 function hideAllUIs() {
-	$('#wins_info').hide();
-	$('#credit_info').hide();
-	$('#giveaway_submission_info').hide();
-	$('#settings_info').hide();
-	$('#soundbytes').hide();
-	$('#time_info').hide();
-	$('#soundbytes').hide();
-	$('#giveaway_new_info').hide();
-	$('#giveaway_claim_info').hide();
-	$('#products_info').hide();
+	$('#wins_info').fadeOut();
+	$('#credit_info').fadeOut();
+	$('#giveaway_submission_info').fadeOut();
+	$('#settings_info').fadeOut();
+	$('#soundbytes').fadeOut();
+	$('#time_info').fadeOut();
+	$('#soundbytes').fadeOut();
+	$('#giveaway_new_info').fadeOut();
+	$('#giveaway_claim_info').fadeOut();
+	$('#products_info').fadeOut();
 }
 
 function hideMenuLinks() {
-	$('#wins').hide();
-	$('#credit').hide();
-	$('#giveaway_submission').hide();
-	$('#settings').hide();
-	$('#time').hide();
+	$('#wins').fadeOut();
+	$('#credit').fadeOut();
+	$('#giveaway_submission').fadeOut();
+	$('#settings').fadeOut();
+	$('#time').fadeOut();
 }
 
 function showMenuLinks() {
-	$('#wins').show();
-	$('#credit').show(); 
-	$('#giveaway_submission').show();
-	$('#settings').show();
-	$('#time').show();
+	$('#wins').fadeIn();
+	$('#credit').fadeIn(); 
+	$('#giveaway_submission').fadeIn();
+	$('#settings').fadeIn();
+	$('#time').fadeIn();
 }
 
 function handleErrorCodes(data) {
@@ -797,12 +797,13 @@ function showExGames() {
 	prevSoundbyteCreditCount = $('#soundbyte_credit_count').html();
 	$('#soundbyte_credit_count').html("");
 	getAvailableExGames();
-	$('#exgame_redemptions').hide();
-	$('#giveaway_wins_title').hide();
+	$('#exgame_redemptions').fadeOut();
+	$('#giveaway_wins_title').fadeOut();
+	$('.artificial_break').fadeOut();
 	$('#exgame_redeem').removeClass("exgame_redeem_important");
 	$('#exgame_redeem').addClass("exgame_redeem_height_important");
 	$('#exgame_redeem').addClass("exgame_redeem");
-	$('#raffle_wins').hide();
+	$('#raffle_wins').fadeOut();
 	$('#redemptions_toggle').html("View !Game Redemptions");
 	$('#exgames_title').html("Available !Games");
 }
@@ -810,13 +811,14 @@ function showExGames() {
 function showExGameRedemptions() {
 	$('#soundbyte_credits').html("Soundbyte Credits");
 	$('#soundbyte_credit_count').html(prevSoundbyteCreditCount);
+	$('.artificial_break').fadeIn();
 	getWinnings();
 	$('#exgame_redeem').addClass("exgame_redeem_important");
 	$('#exgame_redeem').removeClass("exgame_redeem_height_important");
 	$('#exgame_redeem').removeClass("exgame_redeem");
-	$('#exgame_redemptions').show();
-	$('#giveaway_wins_title').show();
-	$('#raffle_wins').show();
+	$('#exgame_redemptions').fadeIn();
+	$('#giveaway_wins_title').fadeIn();
+	$('#raffle_wins').fadeIn();
 	$('#redemptions_toggle').html("Redeem !Game");
 	$('#exgames_title').html("!Game Redemptions");
 }
@@ -899,7 +901,7 @@ function handleGiveawayNew(payload) {
 	$('#giveaway_new_author').html(payload['author']);
 	$('#giveaway_claim_author').html(payload['author']);
 	$('#giveaway_new_remaining').html(getTimeStringRawSeconds(payload['ends_in']));
-	$('#giveaway_new_info').show();
+	$('#giveaway_new_info').fadeIn();
 	if(giveawayEndsInTimerRunning == false) {
 		giveawayEndsInTimer = setInterval(function() { giveawayEndsInCountdown(); }, 1000);
 		giveawayEndsInTimerRunning = true;
@@ -929,15 +931,15 @@ function handleGiveawayClaim(payload) {
 	$('#giveaway_claim_winner').html(payload['winner']);
 	$('#giveaway_claim_remaining').html(getTimeStringRawSeconds(claimEndsIn));
 	if(payload['winner'].toLowerCase() == username.toLowerCase()) {
-		$('#giveaway_claim_claim').show();
-		$('#giveaway_claim_pass').show();
+		$('#giveaway_claim_claim').fadeIn();
+		$('#giveaway_claim_pass').fadeIn();
 		alertSuccess("You won the raffle! Claim it!");
 	} else {
-		$('#giveaway_claim_claim').hide();
-		$('#giveaway_claim_pass').hide();
+		$('#giveaway_claim_claim').fadeOut();
+		$('#giveaway_claim_pass').fadeOut();
 		alertFail(payload['winner'] + " won the raffle!");
 	}
-	$('#giveaway_claim_info').show();
+	$('#giveaway_claim_info').fadeIn();
 	if(claimEndsInTimerRunning == false) {
 		claimEndsInTimer = setInterval(function() { claimEndsInCountdown(); }, 1000);
 		claimEndsInTimerRunning = true;
@@ -951,8 +953,8 @@ function handleGiveawayClear(payload) {
 	giveawayEndsInTimerRunning = false;
 	claimEndsIn = 0;
 	giveawayEndsIn = 0;
-	$('#giveaway_claim_claim').hide();
-	$('#giveaway_claim_pass').hide();
+	$('#giveaway_claim_claim').fadeOut();
+	$('#giveaway_claim_pass').fadeOut();
 	hideAllUIs();
 	$('#giveaway_new_action').removeClass("giveaway_new_action_leave");
 	$('#giveaway_new_action').addClass("giveaway_new_action_enter");
@@ -973,7 +975,7 @@ function handleGiveawayClear(payload) {
 		alertSuccess("Giveaway has ended!");
 	}
 	
-	$('#soundbytes').show();
+	$('#soundbytes').fadeIn();
 	
 }
 
@@ -1136,13 +1138,13 @@ function handleListen(id) {
 }
 
 function showProducts() {
-	$('#wins_info').hide();
-	$('#credit_info').hide();
-	$('#giveaway_submission_info').hide();
-	$('#settings_info').hide();
-	$('#soundbytes').hide();
-	$('#time_info').hide();
-	$('#products_info').show();
+	$('#wins_info').fadeOut();
+	$('#credit_info').fadeOut();
+	$('#giveaway_submission_info').fadeOut();
+	$('#settings_info').fadeOut();
+	$('#soundbytes').fadeOut();
+	$('#time_info').fadeOut();
+	$('#products_info').fadeIn();
 }
 
 function getSoundbyteCredits() {
@@ -1212,7 +1214,7 @@ function handleSuccessfulTransaction(transId, transReceipt) {
 		},
         success: function(data) {
             if(data.successful) {
-				$('#products_info').hide();
+				$('#products_info').fadeOut();
                 alertSuccess("Transaction successful! Credits updated!");
 				getStats(true);
             } else {
