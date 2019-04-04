@@ -2,7 +2,7 @@ var panel_token;
 var payload;
 var announce = true;
 var authenticated = false;
-var version = 20;
+var version = 21;
 var platform = "web";
 var username;
 var initialRender = false;
@@ -745,7 +745,7 @@ function handleMenuLinks(clicked_on, callback = null) {
 	}
 }
 
-function hideAllUIs() {
+function hideAllUIs(keep = "") {
 	$('#wins_info').fadeOut();
 	$('#credit_info').fadeOut();
 	$('#giveaway_submission_info').fadeOut();
@@ -753,8 +753,12 @@ function hideAllUIs() {
 	$('#soundbytes').fadeOut();
 	$('#time_info').fadeOut();
 	$('#soundbytes').fadeOut();
-	$('#giveaway_new_info').fadeOut();
-	$('#giveaway_claim_info').fadeOut();
+	if(keep != "giveaway_info") {
+		$('#giveaway_new_info').fadeOut();
+	}
+	if(keep != "giveaway_claim") {
+		$('#giveaway_claim_info').fadeOut();
+	}
 	$('#products_info').fadeOut();
 }
 
@@ -894,7 +898,11 @@ function giveawayEndsInCountdown() {
 function handleGiveawayNew(payload) {
 	giveawayId = payload['id'];
 	giveawayEndsIn = parseInt(payload['ends_in']);
-	hideAllUIs();
+	if($('#giveaway_new_info').is(":visible")) {
+		hideAllUIs('giveaway_info');
+	} else {
+		hideAllUIs();
+	}
 	hideMenuLinks();
 	$('#giveaway_new_name').html(payload['name']);
 	$('#giveaway_claim_name').html(payload['name']);
@@ -923,7 +931,11 @@ function claimEndsInCountdown() {
 }
 
 function handleGiveawayClaim(payload) {
-	hideAllUIs();
+	if($('#giveaway_claim_info').is(":visible")) {
+		hideAllUIs('giveaway_claim');
+	} else {
+		hideAllUIs();
+	}
 	giveawayId = payload['id'];
 	$('#giveaway_claim_name').html(payload['name']);
 	$('#giveaway_claim_author').html(payload['author']);
